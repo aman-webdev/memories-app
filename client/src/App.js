@@ -7,14 +7,16 @@ import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getPosts } from "./actions/posts";
+import { useState } from "react";
 
 const App = () => {
+  const [currentId, setCurrentId] = useState(null);
   const classes = useStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPosts());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container>
@@ -33,15 +35,16 @@ const App = () => {
         <Container>
           <Grid
             container
-            justify="space-between"
+            justifyContent="space-between"
             alignItems="stretch"
             spacing={3}
+            className={classes.mainContainer}
           >
             <Grid item xs={12} sm={7}>
-              <Posts />
+              <Posts setCurrentId={setCurrentId} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Form />
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
         </Container>
